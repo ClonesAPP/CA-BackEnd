@@ -1,0 +1,9 @@
+<h2>Log In</h2>
+<!-- Django's way to perform a post-->
+<form method="post">
+    <!-- Preventing CRSF attack-->
+    {% csrf_token %}
+    <!-- Form as paragraph-->
+    {{ form.as_p }}
+    <button type="submit">Log In</button>
+</form>
