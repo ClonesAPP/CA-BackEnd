@@ -6,7 +6,7 @@ from django.db import models
 class Client(models.Model):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50, unique=True)
+    email = models.EmailField(unique=True)
     identification = models.CharField(max_length=50, unique=True)
     address = models.CharField(max_length=100, default="")
     # user_type_choices = models.TextChoices('user_type', 'admin staff'),
@@ -15,8 +15,16 @@ class Client(models.Model):
     cell_number = models.CharField(max_length=15, default="")
     city = models.CharField(max_length=60),  # CHANGE THIS TO OPTIONS  USING DJANGO-CITIES FOR LATER SPRINTS
 
+    def __str__(self):
+        return "%S %S" % (self.name, self.surname)
+
 class Product(models.Model):
-    pass
+    product_name = models.CharField(max_length=50)
+    price = models.FloatField(default=0.0)
+    specifications = models.CharField(max_length=200)
+    
+    def __str__(self):
+        return "%S"  % (self.name)
 
 class PaymentMethods(models.Model):
     pass
