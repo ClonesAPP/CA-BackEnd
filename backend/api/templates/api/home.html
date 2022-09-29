@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1>COTIZACIONES</h1>
+
+<div>
+
+    <a href="{% url 'create-quotation' %}">Crear Cotizacion</a>
+
+    <div>
+        {% for quotation in quotations %}
+        <div>
+            <span>@{{quotation.client.name}}</span>
+            <h5>{{quotation.id}} -- <a href="{% url 'quotation' quotation.id %}"> {{quotation}}</a></h5>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>    
+</div>
+
+{% endblock content %}
