@@ -1,9 +1,15 @@
+from secrets import choice
 from tkinter import CASCADE
 from typing import Dict
 from django.conf import settings
 from django.db import models  
 
 # Create your models here.
+PAYMENT_OPTIONS = (
+    ('C', 'Cash'),
+    ('CC', 'Credit Card'),
+    ('OT', 'Other'),
+)
 
 class Client(models.Model):
     name = models.CharField(max_length=50, default="")
@@ -87,16 +93,55 @@ class Quotation(models.Model):
             total += quotated_product.get_total_item_price()
 
 class PaymentMethods(models.Model):
-    pass
+    payment_method = models.CharField(choices=PAYMENT_OPTIONS, max_length=12)
+    charge_percentage = models.FloatField(default=1.0)
 
-class PaymentAmount(models.Model):
-    pass
+
+class Payment(models.Model):
+    stripe_charge_id = models.CharField(max_length=50)
+    client = models.ForeignKey(Client, on_delete=models.SET_NULL, blank=True, null=True)
+    amount = models.FloatField()
+    created_at = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.client.name
 
 class Receipt(models.Model):
-    pass
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                            on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    products = models.ManyToManyField(ProductOnQuotation)
+    created_at = models.DateTimeField(auto_now_add=True) # default=timezone.now()
+    updated_at = models.DateTimeField(auto_now=True)
+    payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.cliente.name
+    
+    def get_total_amount(self):
+        total = 0
+        for quotated_product in self.products.all():
+            total += quotated_product.get_total_item_price()
 
 class ProductOnReceipt(models.Model):
-    pass
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                            on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=True, null=False)
+    quantity = models.PositiveIntegerField(null=False, default=0)
+
+    def __str__(self):
+        return f"{self.quantity} of {self.product.name}"
+
+    def get_total_item_price(self):
+        return self.quantity * self.product.price
+    
+    def get_total_discount_item_price(self):
+        return self.quantity * self.product.get_discount_price
+
+    def get_total_price(self):
+        if self.product.discount.active:
+            return self.get_total_item_price()
+        return self.get_total_discount_item_price()
 
 
 
