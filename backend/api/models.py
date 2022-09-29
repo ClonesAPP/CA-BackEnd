@@ -24,14 +24,14 @@ class Client(models.Model):
     city = models.CharField(max_length=60, default="")  # CHANGE THIS TO OPTIONS  USING DJANGO-CITIES FOR LATER SPRINTS
 
     def __str__(self):
-        return "%S %S" % (self.name, self.surname)
+        return "%s %s" % (self.name, self.surname)
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=50, default="")
     description = models.CharField(max_length=200, default="")
 
     def __str__(self):
-        return "%S" % (self.name)
+        return "%s" % (self.name)
 
 class Discount(models.Model):
     name = models.CharField(max_length=50, default="")
@@ -47,7 +47,7 @@ class Product(models.Model):
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "%S" % (self.name)
+        return "%s" % (self.name)
 
     def get_discount_price(self):
         return self.price * self.discount.discount_percentage
@@ -85,12 +85,13 @@ class Quotation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.cliente.name
+        return self.client.name
     
     def get_total_amount(self):
         total = 0
         for quotated_product in self.products.all():
             total += quotated_product.get_total_item_price()
+        return total
 
 class PaymentMethods(models.Model):
     payment_method = models.CharField(choices=PAYMENT_OPTIONS, max_length=12)

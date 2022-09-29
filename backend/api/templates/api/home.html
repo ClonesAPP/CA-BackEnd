@@ -2,10 +2,16 @@
 
 {% block content %}
 
-<h1>HOME TEMPLATE</h1>
+<h1>COTIZACIONES</h1>
 
 <div>
-    <a href="{% url 'create-quotation' %}">Create quotation</a>
+    <div>
+        {% for quotation in quotations %}
+        <div>
+            <h5>{{quotation.id}} -- <a href="{% url 'quotation' quotation.id %}"> {{quotation}}</a></h5>
+        </div>
+        {% endfor %}
+    </div>    
 </div>
 
 {% endblock content %}
