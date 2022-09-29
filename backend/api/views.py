@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from tkinter.font import ROMAN
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Quotation
-
+from .forms import QuotationForm    
 
 
 # Create your views here.
@@ -16,5 +17,14 @@ def quotation(request, pk):
     return render(request, 'api/quotation.html', context)
 
 def create_quotation(request):
-    context = {}
+    form = QuotationForm()
+    
+    if request.method == 'POST':
+        form = QuotationForm(request.POST)
+        if form.is_valid():
+            form.save() 
+            return redirect('home')
+            
+    context = {'form': form}
     return render(request, 'api/create_quotation.html', context)
+
