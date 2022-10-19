@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from backend.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from .models import Quotation, ProductOnQuotation, Product
-from .forms import QuotationForm
+from .forms import ClientForm, QuotationForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import redirect
@@ -34,3 +34,16 @@ def create_quotation(request):
             
     context = {'form': form}
     return render(request, 'api/create_quotation.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def create_client(request):
+    form = ClientForm()
+
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    
+    context = {'form': form}
+    return render(request, 'api/create_client.html', context)
