@@ -1,3 +1,3 @@
 # ClonesApp's BackEnd
 
-Currently working on: Development branch
+<h2 align="center"> $\color{#824285}{Technologies~stack}$ </h2>
