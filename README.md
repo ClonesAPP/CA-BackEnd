@@ -3,5 +3,5 @@
   <a>Aplicación de logística para PYMES de ventas de componentes de computadores. </a>
 </p>
 <p align="left">
-  <a>Realizada en: Django 4.4, MySQL</a>
+  <a>\textbf{\textit{Desarrollada~en:}} Django 4.4, MySQL</a>
 </p>
