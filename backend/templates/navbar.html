@@ -1,11 +1,25 @@
 {% load static %}
-<div class="container">
-    <a href="{% url 'home' %}" class="header__logo">
-        <img src="{% static 'images/logo.png' %}" />
-        <h1>Octocon App</h1>
-    </a>
-    <nav class="header__menu">         
-    </nav>
-</div>
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+<link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+
+<nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+            <a class="nav-item nav-link" href="{% url 'create-client' %}">Crear cliente</a>
+            <a class="nav-item nav-link" href="{% url 'create-quotation' %}">Crear cotizacion</a>
+            <a class="nav-item nav-link" href="{% url 'logout' %}">Log out</a>
+        </div>
+    </div>
+</nav>
+
+<h1 class="title1">Otocon</h1> 
 <hr>
