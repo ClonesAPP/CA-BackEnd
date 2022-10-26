@@ -21,37 +21,35 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            return render(request, 'api/home.html')
+            return redirect("home")
         else:
             messages.success(request, ("Datos incorrectos, vuelva a intentar"))
             return redirect("login")
     else:
         return render(request, 'registration/login.html', {})
 
+@login_required(redirect_field_name="login")
 def logout_user(request):
     logout(request)
-    messages.success(request, ("Se ha terminado la sesión"))
     return redirect("login")
 
-@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+@login_required(redirect_field_name="login")
 def home(request):
-    quotations = Quotation.objects.all()
-    context = {'quotations': quotations}
-    return render(request, 'api/home.html', context)
+    return render(request, 'api/home.html')
 
-@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+@login_required(redirect_field_name="login")
 def see_quotations(request):
     quotations = Quotation.objects.all()
     context = {'quotations': quotations}
     return render(request, 'api/quotations.html', context)
 
-@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+@login_required(redirect_field_name="login")
 def quotation(request, pk):
     quotation = Quotation.objects.get(id=pk)
     context = {'quotation': quotation}
     return render(request, 'api/quotation.html', context)
 
-@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+@login_required(redirect_field_name="login")
 def create_quotation(request):
     form = QuotationForm()
     

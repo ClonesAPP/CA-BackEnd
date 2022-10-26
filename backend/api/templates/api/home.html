@@ -1,11 +1,12 @@
 {% extends 'main.html' %}
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% load static %}
+<link href="{% static 'css/home.css' %}" rel="stylesheet">
 
 {% block content %}
 
 <body>
-    
+    <p> Bienvenido, {{user.username|title}}</p>
 </body>
 
 {% endblock content %}
