@@ -4,17 +4,23 @@
     integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
+<link href="{% static 'css/navbar.css' %}" rel="stylesheet">
 
 <script src="https://kit.fontawesome.com/d9e2990509.js" crossorigin="anonymous"></script>
 
 <body>
     <div class="sidebar">
+        <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a><hr>
         <a class="nav-item nav-link" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
+        <hr>
         <a class="nav-item nav-link" href="{% url 'create-client' %}"><i class="fa fa-fw fa-wrench"></i>Crear cliente</a>
+        <hr>
         <a class="nav-item nav-link" href="{% url 'create-quotation' %}"><i class="fa fa-fw fa-user"></i>Crear cotizacion</a>
+        <hr>
         <a class="nav-item nav-link" href="{% url 'see-quotations' %}"><i class="fa fa-fw fa-user"></i>Ver cotizacion</a>
-        <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fa fa-fw fa-envelope"></i>Log out</a>
+        <hr>
+        
+        <a id="logout-button" class="nav-item nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
     </div>
 </body>
 
