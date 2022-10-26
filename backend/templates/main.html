@@ -5,14 +5,20 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Octocon</title>
+    <title>Octo-OP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .main{
+            margin-left: 13%;
+        }
+    </style>
 <body>
+    
     {% include 'navbar.html' %}
 
-    {% block content %}
-    
-
-    {% endblock content %}
+    <div class="main">
+        {% block content %}
+        {% endblock content %}
+    </div>
 </body>
 </html>
