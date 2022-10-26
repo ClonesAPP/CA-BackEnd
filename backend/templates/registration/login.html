@@ -1,3 +1,5 @@
+
+
 {% block content %}
 
 {% load static %}
@@ -6,16 +8,9 @@
 
 <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}"/>
 <link href="{% static 'css/login_style.css' %}" rel="stylesheet">
+<link href="{% static 'css/footer.css' %}" rel="stylesheet">
 <script src="https://kit.fontawesome.com/d9e2990509.js" crossorigin="anonymous"></script>
-<!--
-<form method="post" class="form-box">
-    <a class="navbar-brand" href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
-    {% csrf_token %}
-    {{ form.as_p }}
 
-    <button type="lsubmit"> Log In</button>
-</form>
--->
 <title>Octo-OP</title>
 <body>
     <div class="box-form">

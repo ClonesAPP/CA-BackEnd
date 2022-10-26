@@ -1,7 +1,3 @@
-.body{
-    color: #FFFFFF;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url("/static/images/background.jpg");
-    overflow: hidden;
+#welcome{
+    font-size: 40px;
 }
