@@ -17,6 +17,12 @@ def home(request):
     return render(request, 'api/home.html', context)
 
 @login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def see_quotations(request):
+    quotations = Quotation.objects.all()
+    context = {'quotations': quotations}
+    return render(request, 'api/quotations.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
 def quotation(request, pk):
     quotation = Quotation.objects.get(id=pk)
     context = {'quotation': quotation}
