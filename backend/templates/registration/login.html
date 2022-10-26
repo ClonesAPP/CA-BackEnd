@@ -1,5 +1,3 @@
-
-
 {% block content %}
 
 {% load static %}
@@ -8,9 +6,9 @@
 
 <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}"/>
 
-<link href="{% static 'css/login.css' %}" rel="stylesheet">
+<link href="{% static 'css/login_style.css' %}" rel="stylesheet">
 
-
+<!--
 <form method="post" class="form-box">
     <a class="navbar-brand" href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
     {% csrf_token %}
@@ -18,6 +16,34 @@
 
     <button type="lsubmit"> Log In</button>
 </form>
+-->
+<body>
+    <div class="box-form">
+        <div class="left">
+            <div class="overlay">
+                <h1>Octo-OP App</h1>
+                <br>
+                <p>Software de gestión de recursos para PYMES de venta de clones y perífericos.
+                </p>
+            </div>
+        </div>
 
+        <div class="right">
+            <div class="circular-landscape">
+                <a href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}" alt=""></a>
+            </div>
+            <br><br>
+            <form method="post" class="form-style">
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <button type="lsubmit"> Log In</button>
+                <br><br>
+            </form>
+			<p>¿Olvidaste tu contraseña?</p>
+        </div>
+        <br>
+    </div>
+</body>
 
 {% endblock %}
