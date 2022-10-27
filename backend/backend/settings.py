@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$gyj$bob1kjt=x*8-u7f00@lbbibluzja$1xw_w+m679n)h5&-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,6 +77,19 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# Hosting Database 
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'heldenleben$ca_db',
+        'USER': 'heldenleben',
+        'PASSWORD': 'helden97',
+        'HOST': 'heldenleben.mysql.pythonanywhere-services.com',
+    }
+}
+"""
+# Local host database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -87,7 +100,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -124,11 +136,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/images/'
+
+#STATIC_ROOT = '/home/heldenleben/CA-BackEnd/backend/static'
+
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+
+
+MEDIA_URL = '/images/'
+
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
 

@@ -23,7 +23,6 @@ body {
     border: 2px solid #824285;
     width: 200px;
     outline: none;
-    color: white;
     border-radius:20px;
     transition: 0.30s;
 }
