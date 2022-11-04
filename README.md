@@ -2,10 +2,9 @@
 <p align="center">
   <img src="https://github.com/ClonesAPP/CA-BackEnd/blob/main/images/logo.png">
 </p>
-$\usepackage[T1]{fontenc}
 
-<h1 align="center"> $\color{#824285}{Octocon~App}$ </h1>
 
+<h1 align="center"> { $\fontfamily{qcr}\selectfont\color{#824285}{Octocon~App} }$ </h1>
 
 <p align="left">
   <a>Aplicación de logística para PYMES de ventas de componentes de computadores. </a>
