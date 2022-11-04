@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://github.com/ClonesAPP/CA-BackEnd/blob/main/images/logo.png">
 </p>
-\usepackage[T1]{fontenc}
+$\usepackage[T1]{fontenc}
 
 <h1 align="center"> $\color{#824285}{Octocon~App}$ </h1>
 
