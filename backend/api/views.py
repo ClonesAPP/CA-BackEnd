@@ -35,19 +35,19 @@ def logout_user(request):
 
 @login_required(redirect_field_name="login")
 def home(request):
-    return render(request, 'api/home.html')
+    return render(request, 'home.html')
 
 @login_required(redirect_field_name="login")
 def see_quotations(request):
     quotations = Quotation.objects.all()
     context = {'quotations': quotations}
-    return render(request, 'api/quotations.html', context)
+    return render(request, 'quotations.html', context)
 
 @login_required(redirect_field_name="login")
 def quotation(request, pk):
     quotation = Quotation.objects.get(id=pk)
     context = {'quotation': quotation}
-    return render(request, 'api/quotation.html', context)
+    return render(request, 'quotation.html', context)
 
 @login_required(redirect_field_name="login")
 def create_quotation(request):
@@ -60,7 +60,7 @@ def create_quotation(request):
             return redirect('home')
             
     context = {'form': form}
-    return render(request, 'api/create_quotation.html', context)
+    return render(request, 'create_quotation.html', context)
 
 @login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
 def create_client(request):
@@ -73,4 +73,4 @@ def create_client(request):
             return redirect('home')
     
     context = {'form': form}
-    return render(request, 'api/create_client.html', context)
+    return render(request, 'create_client.html', context)
