@@ -14,16 +14,16 @@
     <link href="{% static 'css/footer.css' %}" rel="stylesheet">
     <link href="{% static 'css/home.css' %}" rel="stylesheet">
     <link href="{% static 'css/create_client.css' %}" rel="stylesheet">
+    <link href="{% static 'css/clients.css' %}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/d9e2990509.js" crossorigin="anonymous"></script>
-<body>
-    
-    {% include 'navbar.html' %}
+</head>
+{% include 'navbar.html' %}
 
-    <div class="main">
-        {% block content %}
-        {% endblock content %}
-    </div>
+<div class="main">
+    {% block content %}
+    {% endblock content %}
+</div>
 
-    {% include 'footer.html' %}
-</body>
+{% include 'footer.html' %}
+
 </html>

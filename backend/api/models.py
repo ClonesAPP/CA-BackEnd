@@ -41,9 +41,9 @@ class Discount(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, default=True, null=False)
-    name = models.CharField(max_length=50,  default=True, null=False)
+    name = models.CharField(max_length=50,  default="", null=False)
     price = models.DecimalField(max_digits=15, decimal_places=0,  default=True, null=False)
-    specifications = models.CharField(max_length=200,  default=True, null=False)
+    specifications = models.CharField(max_length=200,  default="", null=False)
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -99,7 +99,6 @@ class Quotation(models.Model):
 class PaymentMethods(models.Model):
     payment_method = models.CharField(choices=PAYMENT_OPTIONS, max_length=12)
     charge_percentage = models.FloatField(default=1.0)
-
 
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)

@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from backend.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
-from .models import Quotation, ProductOnQuotation, Product
-from .forms import ClientForm, QuotationForm
+from .models import Quotation, ProductOnQuotation, Product, Client
+from .forms import ClientForm, QuotationForm, ProductOnQuotationForm, ProductForm, ProductCategoryForm, DiscountForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import redirect
@@ -41,7 +41,15 @@ def home(request):
 def see_quotations(request):
     quotations = Quotation.objects.all()
     context = {'quotations': quotations}
+
     return render(request, 'quotations.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def see_clients(request):
+    clients = Client.objects.all()
+    context = {'clients': clients}
+
+    return render(request, 'view_users.html', context)
 
 @login_required(redirect_field_name="login")
 def quotation(request, pk):
@@ -52,7 +60,7 @@ def quotation(request, pk):
 @login_required(redirect_field_name="login")
 def create_quotation(request):
     form = QuotationForm()
-    
+    form2 = ProductOnQuotationForm()
     if request.method == 'POST':
         form = QuotationForm(request.POST)
         if form.is_valid():
@@ -74,3 +82,43 @@ def create_client(request):
     
     context = {'form': form}
     return render(request, 'create_client.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def create_product(request):
+    form = ProductForm()
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    context = {'form': form}
+    return render(request, 'create_product.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def create_category(request):
+    form = ProductCategoryForm()
+
+    if request.method == 'POST':
+        form = ProductCategoryForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    context = {'form': form}
+    return render(request, 'create_category.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def create_discount(request):
+    form = DiscountForm()
+
+    if request.method == 'POST':
+        form = DiscountForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'create_discount.html', context)
