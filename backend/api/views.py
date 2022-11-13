@@ -79,7 +79,9 @@ def create_client(request):
         if form.is_valid():
             form.save()
             return redirect('home')
-    
+        else:
+            print(form.errors)
+
     context = {'form': form}
     return render(request, 'create_client.html', context)
 
