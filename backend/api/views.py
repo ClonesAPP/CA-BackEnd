@@ -51,6 +51,30 @@ def see_clients(request):
 
     return render(request, 'view_users.html', context)
 
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def update_client(request, client_id):
+    try: 
+        client_to_update = Client.objects.get(id=client_id)
+    except Client.DoesNotExist:
+        return redirect('home')
+
+    client_form = ClientForm(request.POST or None, instance=client_to_update)
+    if client_form.is_valid():
+        client_form.save()
+        return redirect('home')
+    context = {'client': client_form}
+    print(context)
+    return render(request, 'update_user.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def delete_client(request, client_id):
+    try:
+        client_to_delete = Client.objects.get(id=client_id)
+    except Client.DoesNotExist:
+        return redirect('home')
+    client_to_delete.delete()
+    return redirect('home')
+
 @login_required(redirect_field_name="login")
 def quotation(request, pk):
     quotation = Quotation.objects.get(id=pk)
@@ -75,7 +99,7 @@ def create_client(request):
     form = ClientForm()
 
     if request.method == 'POST':
-        form = ClientForm(request.POST)
+        form = ClientForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('home')

@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <form method="POST">
+        <!-- Security token by Django -->
+        {% csrf_token %}
+ 
+        <!-- form as paragraph -->
+        {{ client.as_p }}
+ 
+        <input type="submit" value="Update">
+    </form>
+ 
+
+{% endblock content %}

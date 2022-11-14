@@ -2,14 +2,20 @@
 
 {% block content %}
 
-    <div id="cards">
-        {% for client in clients %}
-            <div class="card">
-                <span>Cliente: {{client.name}} {{client.surname}}</span>
-                <span>Correo: {{client.email}}</span>
-                <span>Número: +57 {{client.cell_number}}</span>
-            </div>
-        {% endfor %}
+<div id="wrapper-box">
+    <div id="form-wrapper">
+        <h2>Clientes</h2>
+        <div id="cards">
+            {% for client in clients %}
+                <div class="card">
+                    <h5>{{client.id}} -- <span>Cliente: {{client.name}} {{client.surname}}</span></h5>
+                    <span>Correo: {{client.email}}</span>
+                    <span>Número: +57 {{client.cell_number}}</span>
+                    <a href="{% url 'update-client' client.id %}">Editar</a>
+                    <a href="{% url 'delete-client' client.id %}">Borrar</a></h5>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-
+</div>
 {% endblock content %}

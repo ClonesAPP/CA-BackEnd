@@ -11,9 +11,11 @@ urlpatterns = [
     path('create-quotation/', views.create_quotation, name="create-quotation"),
     path('see-quotations/', views.see_quotations, name="see-quotations"),
 
-    # Rutas de crear y ver clientes
+    # Rutas CRUD cliente
     path('create-client/', views.create_client, name="create-client"),
     path('see-clients/', views.see_clients, name="see-clients"),
+    path('delete-client/<str:client_id>', views.delete_client, name="delete-client"),
+    path('update-client/<str:client_id>', views.update_client, name="update-client"),
 
     # Manejo de sesión, login y logout
     path('login_user', views.login_user, name="login"),
