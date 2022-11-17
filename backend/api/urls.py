@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('about-us/', views.about_us, name='about-us'),
     path('profile/', views.update_profile, name='profile'),
     # Rutas de crear, ver cotizacion(es)
     path('quotation/<str:pk>', views.quotation, name="quotation"),

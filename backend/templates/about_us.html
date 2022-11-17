@@ -1,0 +1,78 @@
+{% block content %}
+
+{% load static %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+<link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}"/>
+<link href="{% static 'css/login_style.css' %}" rel="stylesheet">
+<link href="{% static 'css/footer.css' %}" rel="stylesheet">
+<script src="https://kit.fontawesome.com/d9e2990509.js" crossorigin="anonymous"></script>
+
+<title>OctoCon</title>
+<body>
+    <div class="box-form">
+        <div class="left">
+            <div class="overlay">
+                <h2><b>¿Quienes somos?</b></h2>
+                <p> La idea nació en el 2021 dada la necesidad de una herramienta que permitiese almacenar la información sobre los productos<br>
+                    de la empresa y la gestión de los mismos durante las cotizaciones y ventas realizadas por asesores comerciales de la empresa.<br>
+                    Sin embargo fue finalizando el 2022 que se reunió un equipo de desarrollo el cual cuenta con las capacidades necesarias <br>
+                    para ofrecer la solución más práctica y económica.<br>
+                    Somos una casa de software especializada en brindar soluciones de software para la gestión de inventarios y cotizaciones<br>
+                    de empresas enfocadas en comercializar componentes de computadores a nivel nacional. <br>
+                    En nuestro logo se percibe un pulpo dado que es un animal que puede navegar libremente por un espacio determinado. <br>
+                    Hacia ese lado va nuestra filosofía como empresa. Permitir una navegación fluida a través de una interfaz vista como herramienta.<br>
+                </p>
+                <h2><b>¿Quienes son nuestros clientes?</b></h2>
+                <p> Como casa de software que ofrece soluciones tenemos una variedad amplia de clientes. Pero nos enfocamos en aquellos<br>
+                que tienen una relación directa con la comercialización de componentes de computadores a nivel nacional como lo son<br>
+                algunas de las siguientes empresas:
+                </p>
+                <div>
+                        <ul>
+                            <li>Tauret Computadores</li>
+                            <li>Clones y Perifericos</li>
+                            <li>Speedlogic</li>
+                            <li>VSG</li>
+                        </ul>
+                </div>
+                <h2><b>Contacto</b></h2>
+                <h3><b>Andrés Aranguren </b>- afaragurens@unal.edu.co</h3>
+                <p>Desarrollador Fullstack experto en Python, Django, CSS y JS.<br>
+                Estudiante de Ingeniería de Sistemas de la Universidad<br>
+                Nacional de Colombia</p>
+
+                <h3><b>Elkin Ramirez </b>- elramirez@unal.edu.co</h3>
+                <p>Desarrollador BackEnd con amplias habilidades en MySQL, Python y JS.<br>
+                Estudiante de Ingeniería de Sistemas de la Universidad<br>
+                Nacional de Colombia</p>
+            </div>
+        </div>
+
+        <div class="right">
+            <div class="circular-landscape">
+                <br>
+                <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a>
+                <br><br><h2><b>Misión</b></h2>
+                <p>Brindar una solución de software económica, útil y personalizable<br>
+                que se ajuste a diferentes empresas en el sector tecnológico<br>
+                de venta de partes de computadores, supliendo las necesidades de<br>
+                gestión de recursos de estas PYMES (Pequeñas y Medianas Empresas).
+                </p>
+                <br><br><br>
+                <h2><b>Visión</b></h2>
+                <p>
+                Para finales del 2023 seremos líderes en el mercado de software<br>
+                como alternativa en Colombia de soluciones informáticas para la<br> gestión
+                de recursos y soporte de operación de PYMES especializadas<br> en la
+                venta de partes de computadores.
+                </p>
+            </div>
+            
+        </div>
+        <br>
+    </div>
+</body>
+
+{% endblock %}

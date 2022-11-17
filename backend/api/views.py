@@ -205,3 +205,7 @@ def update_profile(request):
     
     context = {'user_form':user_form, 'up_form':user_prof_form}
     return render(request, 'profile.html', context)
+
+
+def about_us(request):
+    return render(request, 'about_us.html')
