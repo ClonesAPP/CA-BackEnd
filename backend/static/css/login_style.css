@@ -132,3 +132,11 @@ body {
     background-image: linear-gradient(180deg, #824285 55%, #613c81 100%);
 }
 
+#contenedor{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#contenedor>div{
+    width: 50%;
+}
