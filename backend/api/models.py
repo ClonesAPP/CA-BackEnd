@@ -39,6 +39,9 @@ class Discount(models.Model):
     discount_percentage = models.FloatField(default=0.0)
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return "%s" % (self.name)
+
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, default=True, null=False)
     name = models.CharField(max_length=50,  default="", null=False)
@@ -50,7 +53,7 @@ class Product(models.Model):
         return "%s" % (self.name)
 
     def get_discount_price(self):
-        return self.price * self.discount.discount_percentage
+        return self.price * (1 - self.discount.discount_percentage/100)
 
 class ProductInventory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=True, null=False)
