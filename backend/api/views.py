@@ -148,3 +148,17 @@ def create_discount(request):
 
     context = {'form': form}
     return render(request, 'create_discount.html', context)
+
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def see_products(request):
+    products = Product.objects.all()
+    context = {'products': products}
+
+    return render(request, 'see_products.html', context)
+
+@login_required(redirect_field_name="login")
+def product(request, pk):
+    product = Product.objects.get(id=pk)
+    context = {'product': product}
+    return render(request, 'product.html', context)

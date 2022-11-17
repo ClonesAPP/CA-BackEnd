@@ -21,6 +21,10 @@ urlpatterns = [
     path('login_user', views.login_user, name="login"),
     path('logout_user', views.logout_user, name="logout"),
 
+    # Rutas CRUD producto
+    path('product/<str:pk>', views.product, name="product"),
+    path('see-products/', views.see_products, name="see-products"),
+
     # Creación de producto, para ingresar un producto este requiere crear/seleccionar una categoría y un descuento de ser necesario.
     path('create-product/', views.create_product, name="create-product"),
     path('create-category/', views.create_category, name="create-category"),

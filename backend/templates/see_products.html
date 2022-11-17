@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div id="wrapper-box">
+    <div id="form-wrapper">
+        <h2>Clientes</h2>
+        <div id="cards">
+            {% for product in products %}
+                <div class="card">
+                    <h5>{{product.id}} -- <a href="{% url 'product' product.id %}">Producto: {{product.name}}</a></h5>
+                    <span>Especificaciones: {{product.specifications}}</span>
+                    <span>Precio: ${{product.price}}</span>
+                    <span>Categoría: {{product.category}}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

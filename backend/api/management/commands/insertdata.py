@@ -1,5 +1,5 @@
 import pandas as pd
-from api.models import Product, ProductCategory, Discount, Client
+from api.models import Product, ProductCategory, Discount, Client, ProductInventory
 from django.core.management.base import BaseCommand
 from django.shortcuts import get_object_or_404
 import random
@@ -56,3 +56,8 @@ class Command(BaseCommand):
             product = Product(category=curr_category, name=name, price=price, specifications=specifications, discount=discount)
             product.save()
 
+        # DATA INSERT PRODUCTS TO INVENTORY
+
+        for producto in Product.objects.all():
+            inventario = ProductInventory(product=producto, quantity=random.randint(1,23))
+            inventario.save()

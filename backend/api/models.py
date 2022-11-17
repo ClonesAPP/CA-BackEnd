@@ -59,6 +59,9 @@ class ProductInventory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=True, null=False)
     quantity = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        return "%s %s" % (self.product.name, self.quantity)
+
 class ProductOnQuotation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                             on_delete=models.CASCADE)
