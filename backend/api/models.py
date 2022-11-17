@@ -1,8 +1,10 @@
 from secrets import choice
-from tkinter import CASCADE
+from django.contrib.auth.admin import User
 from typing import Dict
 from django.conf import settings
 from django.db import models  
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 # Create your models here.
 PAYMENT_OPTIONS = (
@@ -10,6 +12,22 @@ PAYMENT_OPTIONS = (
     ('CC', 'Credit Card'),
     ('OT', 'Other'),
 )
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE
+    )
+    identification = models.CharField(max_length=50, unique=True, default="")
+
+    def __str__(self):
+        return "%s %s" % (self.name, self.surname)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    user = instance
+    if created:
+        profile = UserProfile(user=user)
+        profile.save()
 
 class Client(models.Model):
     name = models.CharField(max_length=50, default="")
@@ -81,6 +99,9 @@ class ProductOnQuotation(models.Model):
         if self.product.discount.active:
             return self.get_total_item_price()
         return self.get_total_discount_item_price()
+    
+    def update_inventory(self):
+        self.product 
 
 class Quotation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

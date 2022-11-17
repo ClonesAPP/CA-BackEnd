@@ -5,11 +5,13 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from backend.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from .models import Quotation, ProductOnQuotation, Product, Client
-from .forms import ClientForm, QuotationForm, ProductOnQuotationForm, ProductForm, ProductCategoryForm, DiscountForm
+from .forms import ClientForm, QuotationForm, ProductOnQuotationForm, ProductForm, ProductCategoryForm, DiscountForm, UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.db import transaction
+
 
 # Create your views here.
 
@@ -165,12 +167,9 @@ def product(request, pk):
 
 @login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
 def update_product(request, product_id):
-    print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
     try: 
         product_to_update = Product.objects.get(id=product_id)
-        print(product_to_update)
     except Product.DoesNotExist:
-        print("GONORREA")
         return redirect('home')
 
     product_form = ProductForm(request.POST or None, instance=product_to_update)
@@ -178,7 +177,6 @@ def update_product(request, product_id):
         product_form.save()
         return redirect('home')
     context = {'product': product_form}
-    print(context)
     return render(request, 'update_product.html', context)
 
 @login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
@@ -189,3 +187,21 @@ def delete_product(request, product_id):
         return redirect('home')
     product_to_update.delete()
     return redirect('home')
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+@transaction.atomic
+def update_profile(request):
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        user_prof_form = UserProfileForm(request.POST, instance=request.user.userprofile)
+        if user_form.is_valid() and user_prof_form.is_valid():
+            user_form.save()
+            user_prof_form.save()   
+            return redirect("user:profile")
+    else:
+        user_form = UserForm(instance=request.user)
+        user_prof_form = UserProfileForm(instance=request.user.userprofile)
+    
+    context = {'user_form':user_form, 'up_form':user_prof_form}
+    return render(request, 'profile.html', context)

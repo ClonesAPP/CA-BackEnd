@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from .models import Quotation, Client, ProductOnQuotation, Product, ProductCategory, Discount
+from .models import Quotation, Client, ProductOnQuotation, Product, ProductCategory, Discount, UserProfile
+from django.contrib. auth.models import User
 
 class ProductCategoryForm(ModelForm):
     class Meta:
@@ -30,3 +31,13 @@ class ClientForm(ModelForm):
     class Meta:
         model = Client
         fields = '__all__'
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name")
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ("identification",)

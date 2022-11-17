@@ -61,3 +61,8 @@ class Command(BaseCommand):
         for producto in Product.objects.all():
             inventario = ProductInventory(product=producto, quantity=random.randint(1,23))
             inventario.save()
+
+        
+        # DATA INSERT PRODUCT ON QUOTATION
+
+        

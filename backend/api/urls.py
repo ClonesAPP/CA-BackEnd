@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    
+    path('profile/', views.update_profile, name='profile'),
     # Rutas de crear, ver cotizacion(es)
     path('quotation/<str:pk>', views.quotation, name="quotation"),
     path('create-quotation/', views.create_quotation, name="create-quotation"),
@@ -26,9 +26,9 @@ urlpatterns = [
     path('see-products/', views.see_products, name="see-products"),
     path('delete-product/<str:product_id>', views.delete_product, name="delete-product"),
     path('update-product/<str:product_id>', views.update_product, name="update-product"),
+    path('create-product/', views.create_product, name="create-product"),
 
     # Creación de producto, para ingresar un producto este requiere crear/seleccionar una categoría y un descuento de ser necesario.
-    path('create-product/', views.create_product, name="create-product"),
     path('create-category/', views.create_category, name="create-category"),
     path('create-discount/', views.create_discount, name="create-discount"),
 ]
