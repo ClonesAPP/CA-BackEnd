@@ -1,5 +1,5 @@
 import pandas as pd
-from api.models import Product, ProductCategory, Discount, Client, ProductInventory
+from api.models import Product, ProductCategory, Discount, Client, ProductInventory, User
 from django.core.management.base import BaseCommand
 from django.shortcuts import get_object_or_404
 import random
@@ -65,4 +65,4 @@ class Command(BaseCommand):
         
         # DATA INSERT PRODUCT ON QUOTATION
 
-        
+
