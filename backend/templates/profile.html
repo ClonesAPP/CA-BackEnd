@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div id="wrapper-box">
+    <div id="form-wrapper">  
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{user_form.as_p}}
+            {{up_form.as_p}}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

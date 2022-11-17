@@ -1,0 +1,23 @@
+body{
+    color: #FFFFFF;
+    background-size: cover;
+    background-image: url('/static/images/background3.jpg');
+    position: relative;
+}
+
+.stebrn{
+    font-size: 40px; color: #FFFFFF; text-align: center;
+}
+
+.wrapper-home{
+    margin: 2% auto;
+    width: 90%;
+    height: 650px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex: 1 1 100%;
+    align-items: stretch;
+    justify-content: space-between;
+    box-shadow: 0 0 20px 6px #03054d85;
+}

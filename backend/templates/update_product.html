@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div id="wrapper-box">
+    <div id="form-wrapper">  
+        <form method="POST">
+            <!-- Security token by Django -->
+            {% csrf_token %}
+            <h2>Modificar Producto</h2>
+            <!-- form as paragraph -->
+            {{ product.as_p }}
+    
+            <input type="submit" value="Update">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

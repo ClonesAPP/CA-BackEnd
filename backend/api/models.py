@@ -1,8 +1,10 @@
 from secrets import choice
-from tkinter import CASCADE
+from django.contrib.auth.admin import User
 from typing import Dict
 from django.conf import settings
 from django.db import models  
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 # Create your models here.
 PAYMENT_OPTIONS = (
@@ -10,6 +12,22 @@ PAYMENT_OPTIONS = (
     ('CC', 'Credit Card'),
     ('OT', 'Other'),
 )
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE
+    )
+    identification = models.CharField(max_length=50, unique=True, default="")
+
+    def __str__(self):
+        return "%s %s" % (self.name, self.surname)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    user = instance
+    if created:
+        profile = UserProfile(user=user)
+        profile.save()
 
 class Client(models.Model):
     name = models.CharField(max_length=50, default="")
@@ -39,22 +57,28 @@ class Discount(models.Model):
     discount_percentage = models.FloatField(default=0.0)
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return "%s" % (self.name)
+
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, default=True, null=False)
-    name = models.CharField(max_length=50,  default=True, null=False)
+    name = models.CharField(max_length=50,  default="", null=False)
     price = models.DecimalField(max_digits=15, decimal_places=0,  default=True, null=False)
-    specifications = models.CharField(max_length=200,  default=True, null=False)
+    specifications = models.CharField(max_length=200,  default="", null=False)
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE)
 
     def __str__(self):
         return "%s" % (self.name)
 
     def get_discount_price(self):
-        return self.price * self.discount.discount_percentage
+        return self.price * (1 - self.discount.discount_percentage/100)
 
 class ProductInventory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=True, null=False)
     quantity = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return "%s %s" % (self.product.name, self.quantity)
 
 class ProductOnQuotation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -75,6 +99,9 @@ class ProductOnQuotation(models.Model):
         if self.product.discount.active:
             return self.get_total_item_price()
         return self.get_total_discount_item_price()
+    
+    def update_inventory(self):
+        self.product 
 
 class Quotation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -99,7 +126,6 @@ class Quotation(models.Model):
 class PaymentMethods(models.Model):
     payment_method = models.CharField(choices=PAYMENT_OPTIONS, max_length=12)
     charge_percentage = models.FloatField(default=1.0)
-
 
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
