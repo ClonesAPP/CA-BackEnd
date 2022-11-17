@@ -4,7 +4,7 @@
 
 <div id="wrapper-box">
     <div id="form-wrapper">
-        <h2>Clientes</h2>
+        <h2>Productos</h2>
         <div id="cards">
             {% for product in products %}
                 <div class="card">
@@ -12,6 +12,8 @@
                     <span>Especificaciones: {{product.specifications}}</span>
                     <span>Precio: ${{product.price}}</span>
                     <span>Categoría: {{product.category}}</span>
+                    <a href="{% url 'update-product' product.id %}">Editar</a>
+                    <a href="{% url 'delete-product' product.id %}">Borrar</a></h5>
                 </div>
             {% endfor %}
         </div>

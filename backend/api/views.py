@@ -162,3 +162,30 @@ def product(request, pk):
     product = Product.objects.get(id=pk)
     context = {'product': product}
     return render(request, 'product.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def update_product(request, product_id):
+    print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+    try: 
+        product_to_update = Product.objects.get(id=product_id)
+        print(product_to_update)
+    except Product.DoesNotExist:
+        print("GONORREA")
+        return redirect('home')
+
+    product_form = ProductForm(request.POST or None, instance=product_to_update)
+    if product_form.is_valid():
+        product_form.save()
+        return redirect('home')
+    context = {'product': product_form}
+    print(context)
+    return render(request, 'update_product.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def delete_product(request, product_id):
+    try:
+        product_to_update = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        return redirect('home')
+    product_to_update.delete()
+    return redirect('home')
