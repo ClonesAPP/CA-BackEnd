@@ -17,13 +17,13 @@
     <link href="{% static 'css/clients.css' %}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/d9e2990509.js" crossorigin="anonymous"></script>
 </head>
-{% include 'navbar.html' %}
+<div class="nav-ba">
+    {% include 'navbar.html' %}
+</div>
 
 <div class="main">
     {% block content %}
     {% endblock content %}
 </div>
-
 {% include 'footer.html' %}
-
 </html>

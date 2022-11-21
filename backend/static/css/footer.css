@@ -1,11 +1,11 @@
 .footer-basic{
-    padding: 25px 0;
+    padding: 10px 0;
     background-color: #ffffffe7;
     color: #613c81;
     position:fixed;
     left:13%;
     bottom:0px;
-    height: 170px;
+    height: 10%;
     width:87%
 }
 
