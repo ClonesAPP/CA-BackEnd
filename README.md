@@ -33,6 +33,5 @@
     <li>Andrés Fernando Aranguren</li>
     <li>Andrés Leguizamon</li>
     <li>Elkin Ramírez</li>
-    <li>Nelson Cepeda</li>
   </ul>
 </p>
