@@ -1,27 +1,75 @@
 {% load static %}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+  crossorigin="anonymous"
+/>
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+<link href="{% static 'css/navbar.css' %}" rel="stylesheet" />
 
-<script src="https://kit.fontawesome.com/d9e2990509.js" crossorigin="anonymous"></script>
+<script
+  src="https://kit.fontawesome.com/d9e2990509.js"
+  crossorigin="anonymous"
+></script>
 
 <body>
-    <div class="sidebar">
-        <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" alt=""></a><hr>
-        <a class="nav-item nav-link" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home</a>
-        <hr>
-        <a class="nav-item nav-link" href="{% url 'see-products' %}"><i class="fa-solid fa-warehouse"></i> Inventario</a>
-        <hr>
-        <a class="nav-item nav-link" href="{% url 'see-quotations' %}"><i class="fa-regular fa-newspaper"></i> Cotizaciones</a>
-        <hr>
-        <a class="nav-item nav-link" href="{% url 'see-clients' %}"><i class="fa-solid fa-user-group"></i> Clientes</a>
-        <hr>
-        <a class="nav-item nav-link" href="#"><i class="fa-solid fa-chart-line"></i> Analítica</a>
-        <hr>
-        <!--
+  <div
+    class="sidebar"
+    style="overflow-y: scroll; width: 20%; height: 100%; min-width: 150px"
+  >
+    <a
+      href="{% url 'home' %}"
+      style="width: 100%; height: 15%; min-height: 150px; min-width: 150px; text-align: center;"
+    >
+      <img src="{% static 'images/logo.png' %}" alt="" />
+      <br>OctoCon
+    </a>
+    <hr />
+    <a
+      class="nav-item nav-link"
+      href="{% url 'home' %}"
+style="width: 100%; height: 10%; max-height: 40px; min-width: 175px; text-align: left;"
+      ><i class="fa fa-fw fa-home"></i>	Home</a
+    >
+    <hr />
+    <a
+      class="nav-item nav-link"
+      href="{% url 'see-products' %}"
+style="width: 100%; height: 10%; max-height: 40px; min-width: 175px; text-align: left;"
+      ><i class="fa-solid fa-warehouse"></i> Inventario</a
+    >
+    <hr />
+    <a
+      class="nav-item nav-link"
+      href="{% url 'see-quotations' %}"
+style="width: 100%; height: 10%; max-height: 40px; min-width: 175px; text-align: left;"
+      ><i class="fa-regular fa-newspaper"></i> Cotizaciones</a
+    >
+    <hr />
+    <a
+      class="nav-item nav-link"
+      href="{% url 'see-clients' %}"
+style="width: 100%; height: 10%; max-height: 40px; min-width: 175px; text-align: left;"
+      ><i class="fa-solid fa-user-group"></i> Clientes</a
+    >
+    <hr />
+    <a
+      class="nav-item nav-link"
+      href="#"
+style="width: 100%; height: 10%; max-height: 40px; min-width: 175px; text-align: left;"
+      ><i class="fa-solid fa-chart-line"></i> Analítica</a
+    >
+    <hr />
+    <a
+      class="nav-item nav-link"
+      href="{% url 'logout' %}"
+style="width: 100%; height: 10%; max-height: 40px; min-width: 175px; text-align: left;"
+      ><i class="fa-solid fa-right-from-bracket"></i> Salir</a
+    >
+    <!--
         <a class="nav-item nav-link" href="{% url 'see-clients' %}"><i class="fa fa-fw fa-user"></i>Ver clientes</a>
         <hr>
         <a class="nav-item nav-link" href="{% url 'create-discount' %}"><i class="fa fa-fw fa-user"></i>Crear descuento</a>
@@ -33,8 +81,5 @@
         <a class="nav-item nav-link" href="{% url 'see-products' %}"><i class="fa fa-fw fa-user"></i>Ver productos</a>
         <hr>
         -->
-        <a id="logout-button" class="nav-item nav-link" href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
-        
-    </div>
+  </div>
 </body>
-
