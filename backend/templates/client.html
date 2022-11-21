@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="wrapper-home">
+    <div class="box-wrapper">
+        <h2>Nombre: {{client}}</h2>
+        <h2>Precio: {{client.email}}</h2>
+        <h2>Especificaciones: {{client.correo}}</h2>
+        <a href="{% url 'update-client' client.id %}">Editar</a>
+        <a href="{% url 'delete-client' client.id %}">Borrar</a></h5>
+    </div>
+</div>
+
+
+
+{% endblock content %}

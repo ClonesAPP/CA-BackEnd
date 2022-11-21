@@ -5,6 +5,7 @@
 <div id="wrapper-box">
     <div id="form-wrapper">
         <h2>Productos</h2>
+        <a href="{% url 'create-product' %}">Crear Producto</a>
         <div id="cards">
             {% for product in products %}
                 <div class="card">

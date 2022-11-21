@@ -13,6 +13,7 @@ urlpatterns = [
     path('see-quotations/', views.see_quotations, name="see-quotations"),
 
     # Rutas CRUD cliente
+    path('client/<str:pk>', views.client, name="client"),
     path('create-client/', views.create_client, name="create-client"),
     path('see-clients/', views.see_clients, name="see-clients"),
     path('delete-client/<str:client_id>', views.delete_client, name="delete-client"),

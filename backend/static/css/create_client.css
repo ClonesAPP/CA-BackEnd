@@ -43,13 +43,3 @@ input[type=number]{
     text-align: inherit;
 }
 
-body{
-    color: #FFFFFF;
-    background-size: cover;
-    background-image: url('/static/images/background2.jpg');
-    font-size: 20px;
-    line-height: 1.8;
-    color: #fff;
-    font-weight: 600;
-    height: 100%;
-}
