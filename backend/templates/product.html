@@ -3,8 +3,11 @@
 {% block content %}
 <div id="wrapper-box">
     <div id="form-wrapper">
-        <h2>{{product}}</h2>
-        <h2>{{product.price}}</h2>
+        <h2>Nombre: {{product}}</h2>
+        <h2>Precio: ${{product.price}}</h2>
+        <h2>Especificaciones: {{product.specifications}}</h2>
+        <a href="{% url 'update-product' product.id %}">Editar</a>
+        <a href="{% url 'delete-product' product.id %}">Borrar</a></h5>
     </div>
 </div>
 

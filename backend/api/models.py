@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models  
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 # Create your models here.
 PAYMENT_OPTIONS = (
@@ -22,12 +23,14 @@ class UserProfile(models.Model):
     def __str__(self):
         return "%s %s" % (self.name, self.surname)
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     user = instance
     if created:
         profile = UserProfile(user=user)
         profile.save()
+    
 
 class Client(models.Model):
     name = models.CharField(max_length=50, default="")
@@ -44,12 +47,14 @@ class Client(models.Model):
     def __str__(self):
         return "%s %s" % (self.name, self.surname)
 
+
 class ProductCategory(models.Model):
     name = models.CharField(max_length=50, default="")
     description = models.CharField(max_length=200, default="")
 
     def __str__(self):
         return "%s" % (self.name)
+
 
 class Discount(models.Model):
     name = models.CharField(max_length=50, default="")
@@ -59,6 +64,7 @@ class Discount(models.Model):
 
     def __str__(self):
         return "%s" % (self.name)
+
 
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, default=True, null=False)
@@ -73,12 +79,14 @@ class Product(models.Model):
     def get_discount_price(self):
         return self.price * (1 - self.discount.discount_percentage/100)
 
+
 class ProductInventory(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=True, null=False)
     quantity = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return "%s %s" % (self.product.name, self.quantity)
+
 
 class ProductOnQuotation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -103,6 +111,7 @@ class ProductOnQuotation(models.Model):
     def update_inventory(self):
         self.product 
 
+
 class Quotation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                             on_delete=models.CASCADE)
@@ -123,9 +132,11 @@ class Quotation(models.Model):
             total += quotated_product.get_total_item_price()
         return total
 
+
 class PaymentMethods(models.Model):
     payment_method = models.CharField(choices=PAYMENT_OPTIONS, max_length=12)
     charge_percentage = models.FloatField(default=1.0)
+
 
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)
@@ -135,6 +146,7 @@ class Payment(models.Model):
 
     def __str__(self):
         return self.client.name
+
 
 class Receipt(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -152,6 +164,7 @@ class Receipt(models.Model):
         total = 0
         for quotated_product in self.products.all():
             total += quotated_product.get_total_item_price()
+
 
 class ProductOnReceipt(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

@@ -4,7 +4,7 @@
 
 <div id="wrapper-box">
     <div id="form-wrapper">  
-        <form method="POST" action="">
+        <form method="POST">
             {% csrf_token %}
             {{user_form.as_p}}
             {{up_form.as_p}}

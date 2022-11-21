@@ -34,4 +34,3 @@ admin.site.register(Receipt)
 admin.site.register(ProductOnReceipt)
 admin.site.unregister(User)
 admin.site.register(User, AccountUserAdmin)
-
