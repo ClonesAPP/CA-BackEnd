@@ -5,7 +5,8 @@
     color: #613c81;
     position:fixed;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
+    gap: 5px;
     bottom:0px;
     right: 0px;
     max-width: 85%;
