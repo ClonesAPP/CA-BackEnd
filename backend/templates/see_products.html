@@ -15,6 +15,7 @@
                     <span>Categoría: {{product.category}}</span>
                     <a href="{% url 'update-product' product.id %}">Editar</a>
                     <a href="{% url 'delete-product' product.id %}">Borrar</a></h5>
+                    <button data-product="{{product.id}}" data-action="add" class="update-cart">Agregar a Cotización</button>
                 </div>
             {% endfor %}
         </div>

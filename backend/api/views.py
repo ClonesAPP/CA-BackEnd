@@ -1,7 +1,7 @@
 
 from email import message
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from backend.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from .models import Quotation, ProductOnQuotation, Product, Client
@@ -11,8 +11,8 @@ from django.conf import settings
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.db import transaction
-
-
+import json
+from .utils import quotationData
 # Create your views here.
 
 def login_user(request):
@@ -211,6 +211,44 @@ def update_profile(request):
     context = {'user_form':user_form, 'up_form':user_prof_form}
     return render(request, 'profile.html', context)
 
-
 def about_us(request):
     return render(request, 'about_us.html')
+
+def update_quotation(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+
+    print('Action', action)
+    print(productId)
+
+    user = request.user
+    product = Product.objects.get(id=productId)
+    client = Client.objects.get(id=259)
+    print(product)
+    quotation, created = Quotation.objects.get_or_create(id=1, user=user, client=client)
+
+    productOnQuotation, created = ProductOnQuotation.objects.get_or_create(id=1, user=user, quotation=quotation, product=product)
+    print(productOnQuotation)
+    if action == "add":
+        productOnQuotation.quantity = (productOnQuotation.quantity + 1)
+    elif action == "remove":
+        productOnQuotation.quantity = (productOnQuotation.quantity - 1)
+
+    productOnQuotation.save()
+
+    if productOnQuotation.quantity <= 0:
+        productOnQuotation.delete()
+
+    return JsonResponse('Producto agregado con exito', safe=False)
+
+def cart(request):
+    data = quotationData(request)
+
+    quotation_items = data['quotation_items']
+    quotation = data['quotation']
+    items = data['items']
+
+    context = {'items':items, 'quotation':quotation, 'quotation_items':quotation_items}
+    
+    return render(request, 'cart.html', context)

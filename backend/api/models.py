@@ -88,35 +88,10 @@ class ProductInventory(models.Model):
         return "%s %s" % (self.product.name, self.quantity)
 
 
-class ProductOnQuotation(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                            on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=True, null=False)
-    quantity = models.PositiveIntegerField(null=False, default=0)
-    
-    def __str__(self):
-        return f"{self.quantity} of {self.product.name}"
-
-    def get_total_item_price(self):
-        return self.quantity * self.product.price
-    
-    def get_total_discount_item_price(self):
-        return self.quantity * self.product.get_discount_price
-
-    def get_total_price(self):
-        if self.product.discount.active:
-            return self.get_total_item_price()
-        return self.get_total_discount_item_price()
-    
-    def update_inventory(self):
-        self.product 
-
-
 class Quotation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                             on_delete=models.CASCADE)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    products = models.ManyToManyField(ProductOnQuotation)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True) # default=timezone.now()
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -127,10 +102,28 @@ class Quotation(models.Model):
         return self.client.name
     
     def get_total_amount(self):
-        total = 0
-        for quotated_product in self.products.all():
-            total += quotated_product.get_total_item_price()
+        products_on_quotation = self.productonquotation_set.all()
+        return sum([product.get_total for product in products_on_quotation])
+    
+    def get_quotation_items(self):
+        products_on_quotation = self.productonquotation_set.all()
+        total = sum([product.quantity for product in products_on_quotation])
         return total
+
+
+class ProductOnQuotation(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                            on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=True, null=False)
+    quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE, null=True)
+    quantity = models.PositiveIntegerField(null=False, default=0)
+    
+    @property
+    def get_total(self):
+        if self.product.discount != 0:
+            return self.product.price * self.quantity
+        else:
+            return self.product.get_discount_price * self.quantity
 
 
 class PaymentMethods(models.Model):

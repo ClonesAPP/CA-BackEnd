@@ -11,6 +11,8 @@ urlpatterns = [
     path('quotation/<str:pk>', views.quotation, name="quotation"),
     path('create-quotation/', views.create_quotation, name="create-quotation"),
     path('see-quotations/', views.see_quotations, name="see-quotations"),
+    path('update-quotation/', views.update_quotation, name="update-quotation"),
+    path('cart/', views.cart, name="cart"),
 
     # Rutas CRUD cliente
     path('client/<str:pk>', views.client, name="client"),

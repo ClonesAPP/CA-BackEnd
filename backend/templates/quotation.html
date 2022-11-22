@@ -1,8 +1,11 @@
 {% extends 'main.html' %}
 
 {% block content %}
-
-<h1>{{quotation}}</h1>
-<h1>{{quotation.get_total_amount}}</h1>
+<div id="wrapper-box">
+    <div id="form-wrapper">
+        <h2>Nombre: {{quotation}}</h2>
+        <h2>Precio: ${{quotation.get_total_amount}}</h2>
+    </div>
+</div>
 
 {% endblock content %}
