@@ -226,9 +226,9 @@ def update_quotation(request):
     product = Product.objects.get(id=productId)
     client = Client.objects.get(id=259)
     print(product)
-    quotation, created = Quotation.objects.get_or_create(id=1, user=user, client=client)
+    quotation, created = Quotation.objects.get_or_create(user=user, client=client)
 
-    productOnQuotation, created = ProductOnQuotation.objects.get_or_create(id=1, user=user, quotation=quotation, product=product)
+    productOnQuotation, created = ProductOnQuotation.objects.get_or_create(user=user, quotation=quotation, product=product)
     print(productOnQuotation)
     if action == "add":
         productOnQuotation.quantity = (productOnQuotation.quantity + 1)
@@ -242,9 +242,17 @@ def update_quotation(request):
 
     return JsonResponse('Producto agregado con exito', safe=False)
 
-def cart(request):
-    data = quotationData(request)
+def delete_quotation(request, quotation_id):
+    try:
+        quotation_to_delete = Quotation.objects.get(id=quotation_id)
+    except Quotation.DoesNotExist:
+        return redirect('home')
+    quotation_to_delete.delete()
+    return redirect('see-quotations')
 
+def cart(request, quotation_id):
+    data = quotationData(request, quotation_id)
+    print(data)
     quotation_items = data['quotation_items']
     quotation = data['quotation']
     items = data['items']

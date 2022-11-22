@@ -105,6 +105,7 @@ class Quotation(models.Model):
         products_on_quotation = self.productonquotation_set.all()
         return sum([product.get_total for product in products_on_quotation])
     
+    @property
     def get_quotation_items(self):
         products_on_quotation = self.productonquotation_set.all()
         total = sum([product.quantity for product in products_on_quotation])

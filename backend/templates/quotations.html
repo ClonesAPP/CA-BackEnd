@@ -14,8 +14,9 @@
         {% for quotation in quotations %}
         <div>
             <span>Cliente: {{quotation.client.name}}</span>
-            <h5>{{quotation.id}} -- <a href="{% url 'quotation' quotation.id %}"> {{quotation}}</a></h5>
+            <h5>{{quotation.id}} -- <a href="{% url 'cart' quotation.id %}"> {{quotation}}</a></h5>
             <h5>{{quotation.created_at}} </h5>
+            <a href="{% url 'delete-quotation' quotation.id %}">Borrar</a></h5>
         </div>
         <hr>
         {% endfor %}
