@@ -86,12 +86,17 @@ def quotation(request, pk):
 @login_required(redirect_field_name="login")
 def create_quotation(request):
     form = QuotationForm()
-    form2 = ProductOnQuotationForm()
     if request.method == 'POST':
         form = QuotationForm(request.POST)
         if form.is_valid():
-            form.save() 
-            return redirect('home')
+            quotation = form.save()
+
+            if 'quotationid' in request.session:
+                del request.session['quotationid']
+
+            request.session['quotationid'] = quotation.pk
+
+            return redirect('see-products')
             
     context = {'form': form}
     return render(request, 'create_quotation.html', context)
@@ -217,16 +222,16 @@ def about_us(request):
 def update_quotation(request):
     data = json.loads(request.body)
     productId = data['productId']
+    quotationId = data['quotationId']
     action = data['action']
 
     print('Action', action)
     print(productId)
+    print('QuotationId', quotationId)
 
-    user = request.user
     product = Product.objects.get(id=productId)
-    client = Client.objects.get(id=259)
-    print(product)
-    quotation, created = Quotation.objects.get_or_create(user=user, client=client)
+    quotation = Quotation.objects.get(id=quotationId)
+    user = quotation.user
 
     productOnQuotation, created = ProductOnQuotation.objects.get_or_create(user=user, quotation=quotation, product=product)
     print(productOnQuotation)
@@ -245,10 +250,11 @@ def update_quotation(request):
 def delete_quotation(request, quotation_id):
     try:
         quotation_to_delete = Quotation.objects.get(id=quotation_id)
-    except Quotation.DoesNotExist:
+    except Quotation.DoesNotExist():
         return redirect('home')
     quotation_to_delete.delete()
     return redirect('see-quotations')
+
 
 def cart(request, quotation_id):
     data = quotationData(request, quotation_id)

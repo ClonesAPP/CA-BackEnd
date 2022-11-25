@@ -2,9 +2,7 @@ from .models import *
 
 def quotationData(request, quotation_id):
     if request.user.is_authenticated:
-        user = request.user
-
-        quotation, created = Quotation.objects.get_or_create(id=quotation_id, user=user, client=Client.objects.get(id=259))
+        quotation = Quotation.objects.get(id=quotation_id)
         items = quotation.productonquotation_set.all()
         quotation_items = quotation.get_quotation_items
 
