@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('about-us/', views.about_us, name='about-us'),
-    path('profile/', views.update_profile, name='profile'),
+
     # Rutas de crear, ver cotizacion(es)
     path('quotation/<str:pk>', views.quotation, name="quotation"),
     path('create-quotation/', views.create_quotation, name="create-quotation"),
@@ -25,6 +25,8 @@ urlpatterns = [
     # Manejo de sesión, login y logout
     path('login_user', views.login_user, name="login"),
     path('logout_user', views.logout_user, name="logout"),
+    path('profile/', views.update_profile, name='profile'),
+    path('register/', views.register, name="register"),
 
     # Rutas CRUD producto
     path('product/<str:pk>', views.product, name="product"),

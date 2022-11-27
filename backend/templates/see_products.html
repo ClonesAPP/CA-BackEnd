@@ -5,20 +5,21 @@
 <div id="wrapper-box">
     <div id="form-wrapper">
         <h2>Productos</h2>
+        <h5> <a href="{% url 'cart' request.session.quotationid %}">ID Cotización Actual:  {{request.session.quotationid}}</a></h5>
         <a href="{% url 'create-product' %}">Crear Producto</a>
-        <div id="cards">
-            {% for product in products %}
-                <div class="card">
-                    <h5>{{product.id}} -- <a href="{% url 'product' product.id %}">Producto: {{product.name}}</a></h5>
-                    <span>Especificaciones: {{product.specifications}}</span>
-                    <span>Precio: ${{product.price}}</span>
-                    <span>Categoría: {{product.category}}</span>
-                    <a href="{% url 'update-product' product.id %}">Editar</a>
-                    <a href="{% url 'delete-product' product.id %}">Borrar</a></h5>
-                    <button data-product="{{product.id}}" data-quotation="{{request.session.quotationid}}" data-action="add" class="update-cart">Agregar a Cotización</button>
-                </div>
-            {% endfor %}
-        </div>
+            <div id="cards">
+                {% for product in products %}
+                    <div class="card">
+                        <h5>{{product.id}} -- <a href="{% url 'product' product.id %}">Producto: {{product.name}}</a></h5>
+                        <span>Especificaciones: {{product.specifications}}</span>
+                        <span>Precio: ${{product.price}}</span>
+                        <span>Categoría: {{product.category}}</span>
+                        <a href="{% url 'update-product' product.id %}">Editar</a>
+                        <a href="{% url 'delete-product' product.id %}">Borrar</a></h5>
+                        <button data-product="{{product.id}}" data-quotation="{{request.session.quotationid}}" data-action="add" class="update-cart">Agregar a Cotización</button>
+                    </div>
+                {% endfor %}
+            </div>
     </div>
 </div>
 {% endblock content %}

@@ -5,6 +5,7 @@ for (i = 0; i < updateBtns.length; i++) {
 		var productId = this.dataset.product
 		var quotationId = this.dataset.quotation
 		var action = this.dataset.action
+		console.log('GONORREA')
 		console.log('productId:', productId, 'QuotationId:', quotationId, 'Action:', action)
 		console.log('USER:', user)
 
@@ -34,5 +35,6 @@ function updateUserOrder(productId, quotationId, action){
 		})
 		.then((data) => {
 		    console.log('data:', data)
+			location.reload()
 		});
 }

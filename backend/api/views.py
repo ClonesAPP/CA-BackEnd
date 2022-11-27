@@ -5,10 +5,11 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from backend.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
 from .models import Quotation, ProductOnQuotation, Product, Client
-from .forms import ClientForm, QuotationForm, ProductOnQuotationForm, ProductForm, ProductCategoryForm, DiscountForm, UserForm, UserProfileForm
+from .forms import ClientForm, QuotationForm, ProductOnQuotationForm, ProductForm, ProductCategoryForm, DiscountForm, UserForm, UserProfileForm, NewUserForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import redirect
+from django.contrib.auth import login
 from django.contrib import messages
 from django.db import transaction
 import json
@@ -208,13 +209,28 @@ def update_profile(request):
         if user_form.is_valid() and user_prof_form.is_valid():
             user_form.save()
             user_prof_form.save()   
-            return redirect("user:profile")
+            return redirect("profile")
     else:
         user_form = UserForm(instance=request.user)
         user_prof_form = UserProfileForm(instance=request.user.userprofile)
     
     context = {'user_form':user_form, 'up_form':user_prof_form}
     return render(request, 'profile.html', context)
+
+def register(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Se ha registrado correctamente.")
+
+            return redirect('home')
+        messages.error(request, "No se ha podido registrar. Verifique la información suministrada.")
+    form = NewUserForm()
+    context = {'register_form':form}
+    
+    return render(request, 'registration.html', context)
 
 def about_us(request):
     return render(request, 'about_us.html')
@@ -227,7 +243,7 @@ def update_quotation(request):
 
     print('Action', action)
     print(productId)
-    print('QuotationId', quotationId)
+    print('QuotationId:', quotationId)
 
     product = Product.objects.get(id=productId)
     quotation = Quotation.objects.get(id=quotationId)
