@@ -1,6 +1,5 @@
 from django.forms import ModelForm
 from .models import Quotation, Client, ProductOnQuotation, Product, ProductCategory, Discount, UserProfile
-from django.contrib. auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
