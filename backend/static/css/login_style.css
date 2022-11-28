@@ -11,6 +11,8 @@ body {
 
 .form-style input[type="text"],
 .form-style input[type="password"],
+.form-style input[type="email"],
+.form-style input[type="number"],
 .form-style button[type="lsubmit"],
 .form-style button[type="rsubmit"] {
     font-family: inherit;
@@ -132,3 +134,13 @@ body {
     background-image: linear-gradient(180deg, #824285 55%, #613c81 100%);
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

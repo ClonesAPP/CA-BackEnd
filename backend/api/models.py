@@ -18,7 +18,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE
     )
-    identification = models.CharField(max_length=50, unique=True, default="")
+    identification = models.CharField(max_length=50, default="")
 
     def __str__(self):
         return "%s %s" % (self.name, self.surname)

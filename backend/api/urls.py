@@ -34,6 +34,7 @@ urlpatterns = [
     path('delete-product/<str:product_id>', views.delete_product, name="delete-product"),
     path('update-product/<str:product_id>', views.update_product, name="update-product"),
     path('create-product/', views.create_product, name="create-product"),
+    path('add-products/', views.add_products, name="add-products"),
 
     # Creación de producto, para ingresar un producto este requiere crear/seleccionar una categoría y un descuento de ser necesario.
     path('create-category/', views.create_category, name="create-category"),

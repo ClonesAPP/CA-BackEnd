@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -161,3 +162,5 @@ LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "logout"
 
+SESSION_EXPIRE_SECONDS = 300  # 5 minutos
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True

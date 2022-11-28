@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from backend.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
-from .models import Quotation, ProductOnQuotation, Product, Client
+from .models import Quotation, ProductOnQuotation, Product, Client, UserProfile
 from .forms import ClientForm, QuotationForm, ProductOnQuotationForm, ProductForm, ProductCategoryForm, DiscountForm, UserForm, UserProfileForm, NewUserForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -97,7 +97,7 @@ def create_quotation(request):
 
             request.session['quotationid'] = quotation.pk
 
-            return redirect('see-products')
+            return redirect('add-products')
             
     context = {'form': form}
     return render(request, 'create_quotation.html', context)
@@ -170,6 +170,13 @@ def see_products(request):
 
     return render(request, 'see_products.html', context)
 
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def add_products(request):
+    products = Product.objects.all()
+    context = {'products': products}
+
+    return render(request, 'add_products.html', context)
+
 @login_required(redirect_field_name="login")
 def product(request, pk):
     product = Product.objects.get(id=pk)
@@ -222,6 +229,9 @@ def register(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+            identification = form.cleaned_data.get('identification')
+            user_profile = UserProfile.objects.get_or_create(user=user, identification=identification)
+            user_profile.save()
             login(request, user)
             messages.success(request, "Se ha registrado correctamente.")
 
@@ -235,6 +245,7 @@ def register(request):
 def about_us(request):
     return render(request, 'about_us.html')
 
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
 def update_quotation(request):
     data = json.loads(request.body)
     productId = data['productId']
