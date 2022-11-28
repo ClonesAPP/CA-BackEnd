@@ -230,8 +230,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             identification = form.cleaned_data.get('identification')
-            user_profile = UserProfile.objects.get_or_create(user=user, identification=identification)
-            user_profile.save()
+            UserProfile.objects.filter(user_id = user.id).update(identification = identification)
             login(request, user)
             messages.success(request, "Se ha registrado correctamente.")
 

@@ -11,15 +11,7 @@ class UserProfileInLine(admin.StackedInline):
     can_delete = False
 
 class AccountUserAdmin(AuthUserAdmin):
-    def add_view(self, *args, **kwargs):
-        self.inlines = []
-
-        return super(AccountUserAdmin, self).add_view(*args, **kwargs)
-
-    def change_view(self, *args, **kwargs):
-        self.inlines = [UserProfileInLine]
-
-        return super(AccountUserAdmin, self).change_view (*args, **kwargs)
+    inlines = [UserProfileInLine]
 
 admin.site.register(Client)
 admin.site.register(ProductCategory)

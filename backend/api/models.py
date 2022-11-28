@@ -15,20 +15,17 @@ PAYMENT_OPTIONS = (
 )
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE
-    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     identification = models.CharField(max_length=50, default="")
 
     def __str__(self):
-        return "%s %s" % (self.name, self.surname)
+        return "%s %s" % (self.user.first_name, self.user.last_name, self.identification )
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    user = instance
     if created:
-        profile = UserProfile(user=user)
+        profile = UserProfile.objects.create(user=instance)
         profile.save()
     
 
