@@ -1,7 +1,7 @@
 
 from django.urls import path
-
 from . import views
+
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -39,4 +39,6 @@ urlpatterns = [
     # Creación de producto, para ingresar un producto este requiere crear/seleccionar una categoría y un descuento de ser necesario.
     path('create-category/', views.create_category, name="create-category"),
     path('create-discount/', views.create_discount, name="create-discount"),
+
+    path("password_reset", views.password_reset_request, name="password_reset"),
 ]

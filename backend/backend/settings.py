@@ -162,3 +162,9 @@ LOGOUT_REDIRECT_URL = "logout"
 
 SESSION_EXPIRE_SECONDS = 300  # 5 minutos
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = 'AKIAVCGJ4H6RVHA2EOFT'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_SES_REGION_NAME = 'sa-east-1' #(ex: us-east-2)
+AWS_SES_REGION_ENDPOINT ='email.sa-east-1.amazonaws.com' #(ex: email.us-east-2.amazonaws.com)
