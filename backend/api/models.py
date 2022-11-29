@@ -116,6 +116,9 @@ class ProductOnQuotation(models.Model):
     quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE, null=True)
     quantity = models.PositiveIntegerField(null=False, default=0)
     
+    def __str__(self):
+        return "%s * %s" % (self.product.name, self.quantity)
+
     @property
     def get_total(self):
         if self.product.discount != 0:
@@ -128,16 +131,20 @@ class PaymentMethods(models.Model):
     payment_method = models.CharField(choices=PAYMENT_OPTIONS, max_length=12)
     charge_percentage = models.FloatField(default=1.0)
 
+    def __str__(self):
+        return self.payment_method
 
 class Payment(models.Model):
-    stripe_charge_id = models.CharField(max_length=50)
+    payment_method = models.ForeignKey(PaymentMethods, on_delete=models.SET_NULL, null=True)
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, blank=True, null=True)
-    amount = models.FloatField()
+    amount = models.FloatField(default=0.0)
     created_at = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.client.name
 
+    def get_total_to_pay(self):
+        return self.payment_method.charge_percentage * self.amount
 
 class Receipt(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

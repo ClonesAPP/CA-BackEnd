@@ -4,8 +4,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from backend.settings import LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL
-from .models import Quotation, ProductOnQuotation, Product, Client, UserProfile
+from .models import Quotation, ProductOnQuotation, Product, Client, UserProfile, ProductCategory
 from .forms import ClientForm, QuotationForm, ProductOnQuotationForm, ProductForm, ProductCategoryForm, DiscountForm, UserForm, UserProfileForm, NewUserForm
+from .forms import PaymentForm, ReceiptForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import redirect
@@ -177,9 +178,19 @@ def client(request, pk):
 @login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
 def see_products(request):
     products = Product.objects.all()
+    categories = ProductCategory.objects.all()
+    context = {'products': products, 'categories': categories}
+
+    return render(request, 'see_products.html', context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def see_products_category(request, cats):
+    category = ProductCategory.objects.get(id=cats)
+    products = Product.objects.filter(category=category)
     context = {'products': products}
 
     return render(request, 'see_products.html', context)
+
 
 @login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
 def add_products(request):
@@ -349,3 +360,86 @@ def password_reset_request(request):
 	password_reset_form = PasswordResetForm()
 	return render(request=request, template_name="password_reset.html", context={"password_reset_form":password_reset_form})
 
+def CategoryView(request, cats):
+    category = Product.objects.filter(category=cats.replace('-', ' '))
+    context = {'cats': cats.replace('-', ' ').title(), 'category_posts': category}
+    return render(request, "categories.html", context)
+
+@login_required(redirect_field_name=LOGOUT_REDIRECT_URL)
+def search_quotation(request):
+    context = {}
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        quotation = Quotation.objects.filter(client__contains=searched)
+
+        context = {'searche':searched,'quotation': quotation}
+        return render(request, 'search_quotation.html', context)
+    else:
+        return render(request, 'search_quotation.html', context)
+
+
+@login_required(redirect_field_name="login")
+def create_recepit(request):
+    form = ReceiptForm()
+    if request.method == 'POST':
+        form = ReceiptForm(request.POST)
+        if form.is_valid():
+            receipt = form.save()
+
+            return redirect('home')
+
+@login_required(redirect_field_name="login")
+def create_quotation(request):
+    form = QuotationForm()
+    if request.method == 'POST':
+        form = QuotationForm(request.POST)
+        if form.is_valid():
+            quotation = form.save()
+
+            if 'quotationid' in request.session:
+                del request.session['quotationid']
+
+            request.session['quotationid'] = quotation.pk
+
+            return redirect('add-products')
+            
+    context = {'form': form}
+    return render(request, 'create_quotation.html', context)
+
+
+def analytics(request):
+    users = User.objects.all()
+    clients = Client.objects.all()
+    quotations = Quotation.objects.all()
+
+    top_sellers = []
+    top_clients = []
+    products = {}
+
+    for quotation in quotations:
+        for product in ProductOnQuotation.objects.filter(quotation=quotation):
+            listeroni = str(product).split('*')
+            name = listeroni[0]
+            number = listeroni[1]
+            
+            if name in products.keys():
+                new_value = products.get(name) + int(number)
+                products[name] = new_value
+            else:
+                products[name] = int(number)
+
+    sorted_products = sorted(products.items(), key=lambda x:x[1], reverse=True)
+
+    for user in users:
+        top_sellers.append((user.username, Quotation.objects.filter(user=user).count()))
+
+    sorted_list = sorted(top_sellers, key=lambda tup: tup[1], reverse=True)
+
+    for client in clients:
+        top_clients.append((client.name, Quotation.objects.filter(client=client).count()))
+
+    sorted_list2 = sorted(top_clients, key=lambda tup: tup[1], reverse=True)
+
+    context = {'top_sellers':sorted_list[:5], 'top_clients':sorted_list2[:5], 'top_products': sorted_products}
+
+    return render(request, 'analitycs.html', context)

@@ -39,6 +39,9 @@ urlpatterns = [
     # Creación de producto, para ingresar un producto este requiere crear/seleccionar una categoría y un descuento de ser necesario.
     path('create-category/', views.create_category, name="create-category"),
     path('create-discount/', views.create_discount, name="create-discount"),
-
+    path('category/<str:cats>', views.see_products_category, name="category"),
     path("password_reset", views.password_reset_request, name="password_reset"),
+
+    path('search-quotation/', views.search_quotation, name="search-quotation"),
+    path('analytics/', views.analytics, name='analytics'),
 ]

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Quotation, Client, ProductOnQuotation, Product, ProductCategory, Discount, UserProfile
+from .models import Quotation, Client, ProductOnQuotation, Product, ProductCategory, Discount, UserProfile, Payment, Receipt
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -72,3 +72,18 @@ class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
         fields = ("identification",)
+
+class ProductCategoryForm(ModelForm):
+    class Meta:
+        model = ProductCategory
+        fields = '__all__'
+
+class PaymentForm(ModelForm):
+    class Meta:
+        model = Payment
+        fields = '__all__'
+
+class ReceiptForm(ModelForm):
+    class Meta:
+        model = Receipt
+        fields = '__all__'

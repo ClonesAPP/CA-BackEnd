@@ -3,20 +3,27 @@
 {% block content %}
 
 <div id="wrapper-box">
-    <div id="form-wrapper">
+    <form id="form-wrapper">
         <h2>Productos</h2>
         <a href="{% url 'create-product' %}">Crear Producto</a>
+        <h3>Categorías</h3>
+        <div>
+            {% for category in categories %}
+                <a href="{% url 'category' category.id %}"> {{category}}</a>  
+            {% endfor %}
+        </div>
+        
+        <hr>
             <div id="cards">
+                
                 {% for product in products %}
                     <div class="card">
-                        
                         <h5>{{product.id}} -- <a href="{% url 'product' product.id %}">Producto: {{product.name}}</a></h5>
                         <span>Especificaciones: {{product.specifications}}</span>
                         <span>Precio: ${{product.price}}</span>
                         <span>Categoría: {{product.category}}</span>
                         <a href="{% url 'update-product' product.id %}">Editar</a>
                         <a href="{% url 'delete-product' product.id %}">Borrar</a></h5>
-    
                     </div>
                 {% endfor %}
             </div>

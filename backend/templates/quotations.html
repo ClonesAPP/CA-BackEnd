@@ -9,7 +9,14 @@
         <h2>COTIZACIONES</h2>
         <a href="{% url 'create-client' %}">Crear Cliente</a>
         <a href="{% url 'create-quotation' %}">Crear Cotizacion</a>
-        
+        <!--
+        <form class="d-flex" method=POST action="{% url 'search-quotation' %}">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar" name="searched">
+            <button class="btn search-button" type="submit">Buscar</button>
+        </form>
+        -->
+
         <hr>
         <div id="cards">
             {% for quotation in quotations %}

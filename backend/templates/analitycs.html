@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+
+<div id="wrapper-box">
+    <div id="form-wrapper">  
+        <h2>Estadísticas</h2>
+        <hr>
+        <div id="cards">
+            <div class="card" style="text-align: left;">
+                <h3><strong> Top 5 empleados con más ventas</strong></h3>
+                {% for name, sells in top_sellers %}
+                    
+                        <span>Empleado: {{name}}</span>
+                        <span>Ventas: {{sells}}</span>
+                    
+                {% endfor %}
+            </div>
+            <div class="card" style="text-align: left;">
+                <h3><strong> Top 5 clientes con más compras</strong></h3>
+                {% for name, sells in top_clients %}
+                    
+                        <span>Cliente: {{name}}</span>
+                        <span>Compras: {{sells}}</span>
+                    
+                {% endfor %}
+            </div>
+            <div class="card" style="text-align: left;">
+                <h3><strong> Top 5 productos más cotizados.</strong></h3>
+                {% for name, sells in top_products %}
+                    
+                        <span>Producto: {{name}}</span>
+                        <span>Cotizaciones: {{sells}}</span>
+                    
+                {% endfor %}
+            </div>
+        </div>
+    </div>    
+</div>
+
+{% endblock content %}
