@@ -1,0 +1,14 @@
+
+{% block content %}
+
+{% for message in messages %}
+<div class="container-fluid p-0">
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+        <a class="btn-close" href="{{ request.get_full_path }}"></a>
+        {{ message }}
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}
+

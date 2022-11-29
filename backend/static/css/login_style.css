@@ -38,6 +38,14 @@ body {
     overflow: visible !important;
 } 
 
+.form-style input:required:valid {
+    border-color: green;
+}
+
+.form-style input:invalid {
+    border-color: red;
+}
+
 .box-form {
     margin: 2% auto;
     width: 85%;

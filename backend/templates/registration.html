@@ -1,3 +1,4 @@
+{% include 'messages.html' %}
 
 {% block content %} 
 
@@ -31,13 +32,14 @@
             <form method="post"  class="form-style">
                 {% csrf_token %}
                 <div class="inputs">
-                    <input type="text" name="username" placeholder="username">
-					<input type="text" name="first_name" placeholder="nombre">
-					<input type="text" name="last_name" placeholder="apellido">
-					<input type="number" name="identification" placeholder="identification">
-					<input type="email" name="email" placeholder="email">
-                    <input type="password" name="password1" placeholder="contraseña">
-					<input type="password" name="password2" placeholder="contraseña">
+                    <input type="text" name="username" placeholder="username" required pattern="[a-zA-Z]+" title="Solo se permiten letras.">
+					<input type="text" name="first_name" placeholder="nombre" required pattern="[a-zA-Z]+" title="Solo se permiten letras.">
+					<input type="text" name="last_name" placeholder="apellido" required pattern="[a-zA-Z]+" title="Solo se permiten letras.">
+					<input type="number" name="identification" placeholder="identification" required>
+					<input type="email" name="email" placeholder="email" required>
+                    <input type="password" name="password1" placeholder="contraseña" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    title="La contraseña debe contener al menos un numero, una letra mayúscula, una letra minúscula y debe conter 8 o más caracteres.">
+					<input type="password" name="password2" placeholder="contraseña" required>
                 </div>
                 <button type="lsubmit">Registrar</button>
                 <br><br>

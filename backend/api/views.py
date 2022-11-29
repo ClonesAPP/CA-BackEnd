@@ -238,15 +238,28 @@ def update_profile(request):
 def register(request):
     if request.method == 'POST':
         form = NewUserForm(request.POST)
+        print(form)
         if form.is_valid():
             user = form.save()
             identification = form.cleaned_data.get('identification')
+            
             UserProfile.objects.filter(user_id = user.id).update(identification = identification)
             login(request, user)
             messages.success(request, "Se ha registrado correctamente.")
-
             return redirect('home')
-        messages.error(request, "No se ha podido registrar. Verifique la información suministrada.")
+
+        password1 = form.data['password1']
+        password2 = form.data['password2']
+        for msg in form.errors.as_data():
+            if msg == 'email':
+                messages.error(request, f"El email ingresado no es valido.")
+            if msg == 'password2' and password1 == password2:
+                messages.error(request, f"La contraseña no es lo suficientemente fuerte.")
+            elif msg == 'password2' and password1 != password2:
+                messages.error(request, f"Las contraseñas ingresadas no coinciden.")
+
+        messages.error(request, "El nombre de usuario ya existe, intente con otro.")
+
     form = NewUserForm()
     context = {'register_form':form}
     
@@ -313,25 +326,26 @@ def password_reset_request(request):
 			associated_users = User.objects.filter(Q(email=data))
 			if associated_users.exists():
 				for user in associated_users:
-					subject = "Password Reset Requested"
+					subject = "Solicitud de Cambio de Contraseña"
 					email_template_name = "password_reset_email.txt"
 					c = {
 					"email":user.email,
-					'domain':'http://127.0.0.1:8000',
+					'domain':'127.0.0.1:8000',
 					'site_name': 'Octocon',
 					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
 					'token': default_token_generator.make_token(user),
-					'protocol': 'https',
+					'protocol': 'http',
 					}
 					email = render_to_string(email_template_name, c)
 					try:
-						send_mail(subject, email, 'afarangurens@unal.edu.co', [user.email], fail_silently=False)
+						send_mail(subject, email, 'un.otocon@gmail.com', [user.email], fail_silently=False)
 					except BadHeaderError:
 
 						return HttpResponse('Invalid header found.')
 						
-					messages.success(request, 'A message with reset password instructions has been sent to your inbox.')
+					messages.success(request, 'Se ha enviado un mensaje a su correo con las instrucciones para resetear la contraseña.')
 					return redirect ("home")
 			messages.error(request, 'An invalid email has been entered.')
 	password_reset_form = PasswordResetForm()
 	return render(request=request, template_name="password_reset.html", context={"password_reset_form":password_reset_form})
+
